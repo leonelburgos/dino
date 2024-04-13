@@ -150,7 +150,7 @@ body{
     </style>
 </head>
 <body>
-
+    <button id="pausaBtn">Pausa</button>
     <div class="contenedor">
 
         <div class="suelo"></div>
@@ -236,6 +236,18 @@ function Start() {
     dino = document.querySelector(".dino");
     document.addEventListener("keydown", HandleKeyDown);
 }
+
+var pausaBtn = document.getElementById("pausaBtn");
+pausaBtn.addEventListener("click", function() {
+    if (!parado) {
+        parado = true;
+        pausaBtn.innerText = "Reanudar";
+    } else {
+        parado = false;
+        pausaBtn.innerText = "Pausa";
+        Loop(); // Reanuda el bucle de juego
+    }
+});
 
 function Update() {
     if(parado) return;
