@@ -150,15 +150,11 @@ body{
     </style>
 </head>
 <body>
-    <button id="pausaBtn">Pausa</button>
     <div class="contenedor">
-
+        <button id="pausaBtn">Pausa</button> <!-- Botón de pausa dentro del contenedor -->
         <div class="suelo"></div>
-        
         <div class="dino dino-corriendo"></div>
-
         <div class="score">0</div>
-
     </div>
 
     <div class="game-over">GAME OVER</div>
@@ -237,8 +233,15 @@ function Start() {
     document.addEventListener("keydown", HandleKeyDown);
 }
 
-var pausaBtn = document.getElementById("pausaBtn");
-pausaBtn.addEventListener("click", function() {
+// Listener para la tecla "P"
+document.addEventListener("keydown", function(event) {
+    if (event.key === "p" || event.key === "P") {
+        Pausa();
+    }
+});
+
+// Función para pausar/reanudar el juego
+function Pausa() {
     if (!parado) {
         parado = true;
         pausaBtn.innerText = "Reanudar";
@@ -247,7 +250,11 @@ pausaBtn.addEventListener("click", function() {
         pausaBtn.innerText = "Pausa";
         Loop(); // Reanuda el bucle de juego
     }
-});
+}
+
+// Event listener para el botón de pausa
+var pausaBtn = document.getElementById("pausaBtn");
+pausaBtn.addEventListener("click", Pausa);
 
 function Update() {
     if(parado) return;
