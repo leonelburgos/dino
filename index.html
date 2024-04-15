@@ -245,9 +245,13 @@ function Pausa() {
     if (!parado) {
         parado = true;
         pausaBtn.innerText = "Reanudar";
+        // Remueve el foco del botón de pausa para permitir otras interacciones
+        pausaBtn.blur();
     } else {
         parado = false;
         pausaBtn.innerText = "Pausa";
+        // Remueve el foco del botón de pausa para permitir otras interacciones
+        pausaBtn.blur();
         Loop(); // Reanuda el bucle de juego
     }
 }
