@@ -26,17 +26,17 @@ body{
     
     position: relative;
 
-    background: linear-gradient(#b7d6c7, transparent) #ffe2d1;/*linear-gradient(#90ebff, white);*/
+    background: linear-gradient(#7fd6ff, transparent) #00aaff;
     transition: background-color 1s linear;
     overflow: hidden;
 }
 
 .mediodia {
-    background-color: #ffdcf3;
+    background-color: #7fd6ff;
 }
 
 .tarde {
-    background-color: #ffadad;
+    background-color: #e45757;
 }
 
 .noche {
@@ -153,6 +153,22 @@ body{
     color: #584040;
 }
 
+#resetBtn {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#resetBtn:hover {
+    background-color: #ffffff;
+    color: #584040;
+}
+
 @keyframes animarDino{
     from{
         background-position-x: -84px;
@@ -167,6 +183,8 @@ body{
 </head>
 <body>
     <div class="contenedor">
+        <button id="jumpBtn">Saltar</button>
+        <button id="pauseBtn">Pausa</button>
         <button id="resetBtn">Reiniciar</button>
         <button id="pausaBtn">Pausa</button> <!-- Botón de pausa dentro del contenedor -->
         <div class="suelo"></div>
@@ -184,6 +202,47 @@ var resetBtn = document.getElementById("resetBtn");
 resetBtn.addEventListener("click", ReiniciarJuego);
 
 function ReiniciarJuego() {
+    // Agregar event listener para la tecla de espacio
+    document.addEventListener("keydown", HandleSpaceBar);
+
+    function HandleSpaceBar(event) {
+    if (event.keyCode === 32) { // Código para la tecla de espacio
+        if (parado) {
+            ReiniciarJuego(); // Reinicia el juego si está parado (es decir, si ha terminado)
+        } else {
+            Saltar(); // Salta si el juego está en marcha
+        }
+    }
+}
+function ReiniciarJuego() {
+    // Restablece todas las variables y elementos del juego al estado inicial
+    parado = false;
+    gameOver.style.display = "none";
+    score = 0;
+    textoScore.innerText = score;
+    gameVel = 1;
+    contenedor.classList.remove("mediodia", "tarde", "noche");
+    suelo.style.animationDuration = "3s";
+    sueloX = 0;
+    dinoPosY = sueloY;
+    velY = 0;
+    dino.classList.remove("dino-estrellado");
+    dino.classList.add("dino-corriendo");
+
+    // Elimina todos los obstáculos y nubes del juego
+    for (var i = obstaculos.length - 1; i >= 0; i--) {
+        obstaculos[i].parentNode.removeChild(obstaculos[i]);
+        obstaculos.splice(i, 1);
+    }
+    for (var i = nubes.length - 1; i >= 0; i--) {
+        nubes[i].parentNode.removeChild(nubes[i]);
+        nubes.splice(i, 1);
+    }
+
+    // Reinicia el juego llamando a la función Start()
+    Start();
+}
+
     // Reinicia todas las variables y elementos del juego al estado inicial
     parado = false;
     gameOver.style.display = "none";
@@ -237,6 +296,14 @@ function Loop() {
 }
 
 //****** GAME LOGIC ********//
+
+// Event listener para el botón de salto
+var jumpButton = document.getElementById("jumpBtn");
+jumpButton.addEventListener("touchstart", Saltar);
+
+// Event listener para el botón de pausa
+var pauseButton = document.getElementById("pauseBtn");
+pauseButton.addEventListener("touchstart", Pausa);
 
 var sueloY = 22;
 var velY = 0;
