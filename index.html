@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dino Chrome</title>
+    <title>Dino</title>
     <style>
 
 * {
@@ -183,8 +183,6 @@ body{
 </head>
 <body>
     <div class="contenedor">
-        <button id="jumpBtn">Saltar</button>
-        <button id="pauseBtn">Pausa</button>
         <button id="resetBtn">Reiniciar</button>
         <button id="pausaBtn">Pausa</button> <!-- Botón de pausa dentro del contenedor -->
         <div class="suelo"></div>
@@ -202,46 +200,46 @@ var resetBtn = document.getElementById("resetBtn");
 resetBtn.addEventListener("click", ReiniciarJuego);
 
 function ReiniciarJuego() {
-    // Agregar event listener para la tecla de espacio
-    document.addEventListener("keydown", HandleSpaceBar);
+        // Agregar event listener para la tecla de espacio
+        document.addEventListener("keydown", HandleSpaceBar);
 
-    function HandleSpaceBar(event) {
-    if (event.keyCode === 32) { // Código para la tecla de espacio
-        if (parado) {
-            ReiniciarJuego(); // Reinicia el juego si está parado (es decir, si ha terminado)
-        } else {
-            Saltar(); // Salta si el juego está en marcha
+        function HandleSpaceBar(event) {
+        if (event.keyCode === 32) { // Código para la tecla de espacio
+            if (parado) {
+                ReiniciarJuego(); // Reinicia el juego si está parado (es decir, si ha terminado)
+            } else {
+                Saltar(); // Salta si el juego está en marcha
+            }
         }
-    }
-}
-function ReiniciarJuego() {
-    // Restablece todas las variables y elementos del juego al estado inicial
-    parado = false;
-    gameOver.style.display = "none";
-    score = 0;
-    textoScore.innerText = score;
-    gameVel = 1;
-    contenedor.classList.remove("mediodia", "tarde", "noche");
-    suelo.style.animationDuration = "3s";
-    sueloX = 0;
-    dinoPosY = sueloY;
-    velY = 0;
-    dino.classList.remove("dino-estrellado");
-    dino.classList.add("dino-corriendo");
+        }
+    function ReiniciarJuego() {
+        // Restablece todas las variables y elementos del juego al estado inicial
+        parado = false;
+        gameOver.style.display = "none";
+        score = 0;
+        textoScore.innerText = score;
+        gameVel = 1;
+        contenedor.classList.remove("mediodia", "tarde", "noche");
+        suelo.style.animationDuration = "3s";
+        sueloX = 0;
+        dinoPosY = sueloY;
+        velY = 0;
+        dino.classList.remove("dino-estrellado");
+        dino.classList.add("dino-corriendo");
 
-    // Elimina todos los obstáculos y nubes del juego
-    for (var i = obstaculos.length - 1; i >= 0; i--) {
-        obstaculos[i].parentNode.removeChild(obstaculos[i]);
-        obstaculos.splice(i, 1);
-    }
-    for (var i = nubes.length - 1; i >= 0; i--) {
-        nubes[i].parentNode.removeChild(nubes[i]);
-        nubes.splice(i, 1);
-    }
+        // Elimina todos los obstáculos y nubes del juego
+        for (var i = obstaculos.length - 1; i >= 0; i--) {
+            obstaculos[i].parentNode.removeChild(obstaculos[i]);
+            obstaculos.splice(i, 1);
+        }
+        for (var i = nubes.length - 1; i >= 0; i--) {
+            nubes[i].parentNode.removeChild(nubes[i]);
+            nubes.splice(i, 1);
+        }
 
-    // Reinicia el juego llamando a la función Start()
-    Start();
-}
+        // Reinicia el juego llamando a la función Start()
+        Start();
+    }
 
     // Reinicia todas las variables y elementos del juego al estado inicial
     parado = false;
@@ -296,14 +294,6 @@ function Loop() {
 }
 
 //****** GAME LOGIC ********//
-
-// Event listener para el botón de salto
-var jumpButton = document.getElementById("jumpBtn");
-jumpButton.addEventListener("touchstart", Saltar);
-
-// Event listener para el botón de pausa
-var pauseButton = document.getElementById("pauseBtn");
-pauseButton.addEventListener("touchstart", Pausa);
 
 var sueloY = 22;
 var velY = 0;
